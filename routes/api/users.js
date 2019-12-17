@@ -9,7 +9,7 @@ const { check, validationResult } = require("express-validator");
 const User = require("../../models/User");
 
 // @router    POST api/users
-// @desc      Register user
+// @desc      Register/Sign up user
 // @access    Public
 router.post(
   "/",
@@ -61,7 +61,6 @@ router.post(
       // Return jsonwebtoken;
       // https://github.com/auth0/node-jsonwebtoken;
       // https://jwt.io/
-
       jwt.sign(
         {
           user: {
