@@ -6,7 +6,12 @@ const connectDB = async () => {
   try {
     await mongoose.connect(
       db,
-      { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+      {
+        useNewUrlParser: true, //https://mongoosejs.com/docs/deprecations.html
+        useUnifiedTopology: true,
+        useCreateIndex: true,
+        useFindAndModify: false
+      }
     );
     console.log("MongoDB connected");
   } catch (err) {
