@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 
 const ProfileSchema = new mongoose.Schema({
   user: {
+    //can be also 'owner' for example
     //associate the Profile with the User model by using the User ID
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user"
+    ref: "User"
   },
   company: {
     type: String
@@ -111,4 +112,4 @@ const ProfileSchema = new mongoose.Schema({
   }
 });
 
-module.exports = Profile = mongoose.model("profile", ProfileSchema);
+module.exports = Profile = mongoose.model("Profile", ProfileSchema);
