@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const ProfileSchema = new mongoose.Schema({
-  user: {
+  owner: {
     //can be also 'owner' for example
     //associate the Profile with the User model by using the User ID
     type: mongoose.Schema.Types.ObjectId,

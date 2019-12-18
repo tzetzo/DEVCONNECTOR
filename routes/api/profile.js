@@ -13,8 +13,8 @@ const User = require("../../models/User");
 router.get("/me", auth, async (req, res) => {
   try {
     // Get user profile from the profiles collection & get his name and avatar from the users collection
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
+    const profile = await Profile.findOne({ owner: req.user.id }).populate(
+      "User",
       ["name", "avatar"]
     );
 
@@ -69,7 +69,7 @@ router.post(
 
     // Build profile object
     const profileFields = {};
-    profileFields.user = req.user.id;
+    profileFields.owner = req.user.id;
     if (company) profileFields.company = company;
     if (website) profileFields.website = website;
     if (location) profileFields.location = location;
@@ -90,12 +90,12 @@ router.post(
 
     try {
       // Get user profile from the profiles collection
-      let profile = await Profile.findOne({ user: req.user.id });
+      let profile = await Profile.findOne({ owner: req.user.id });
 
       // Update profile if it exists; https://mongoosejs.com/docs/tutorials/findoneandupdate.html
       if (profile) {
         profile = await Profile.findOneAndUpdate(
-          { user: req.user.id },
+          { owner: req.user.id },
           { $set: profileFields },
           { new: true } //to return the document after update is applied; By default, findOneAndUpdate() returns the document as it was before update was applied;
         );
@@ -119,7 +119,7 @@ router.post(
 // @access    Public
 router.get("/", async (req, res) => {
   try {
-    const profiles = await Profile.find().populate("user", ["name", "avatar"]); // get all profiles & the name and avatar for each profile from the users collection
+    const profiles = await Profile.find().populate("User", ["name", "avatar"]); // get all profiles & the name and avatar for each profile from the users collection
     res.json(profiles);
   } catch (e) {
     console.log(e.message);
@@ -133,8 +133,8 @@ router.get("/", async (req, res) => {
 router.get("/:user_id", async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.params.user_id
-    }).populate("user", ["name", "avatar"]); // get user profile & the name and avatar for the user from the users collection
+      owner: req.params.user_id
+    }).populate("User", ["name", "avatar"]); // get user profile & the name and avatar for the user from the users collection
 
     if (!profile) return res.status(400).json({ msg: "Profile not found" });
 
@@ -159,7 +159,7 @@ router.delete("/", auth, async (req, res) => {
     //TODO
 
     //delete user profile
-    await Profile.findOneAndRemove({ user: req.user.id });
+    await Profile.findOneAndRemove({ owner: req.user.id });
 
     //delete user
     await User.findOneAndRemove({ _id: req.user.id });
@@ -218,7 +218,7 @@ router.put(
     };
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id });
+      const profile = await Profile.findOne({ owner: req.user.id });
 
       if (!profile) return res.status(400).json({ msg: "Profile not found" });
 
@@ -238,7 +238,7 @@ router.put(
 // @access    Private
 router.delete("/experience/:exp_id", auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile.findOne({ owner: req.user.id });
     // .select(
     //   "experience" //get only the experience field with the profile;
     // );
@@ -306,7 +306,7 @@ router.put(
     };
 
     try {
-      const profile = await Profile.findOne({ user: req.user.id });
+      const profile = await Profile.findOne({ owner: req.user.id });
 
       if (!profile) return res.status(400).json({ msg: "Profile not found" });
 
@@ -326,7 +326,7 @@ router.put(
 // @access    Private
 router.delete("/education/:edu_id", auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile.findOne({ owner: req.user.id });
     // .select(
     //   "education" //get only the education field with the profile;
     // );
