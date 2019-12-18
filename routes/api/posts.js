@@ -33,8 +33,7 @@ router.post(
         owner: req.user.id,
         text: req.body.text,
         name: user.name,
-        avatar: user.avatar,
-        date: Date.now()
+        avatar: user.avatar
       });
 
       post = await post.save();
@@ -165,6 +164,85 @@ router.put("/unlike/:post_id", auth, async (req, res) => {
     if (e.kind == "ObjectId") {
       //this is run when the user ID is invalid ObjectId
       return res.status(400).json({ msg: "Post not found" });
+    }
+
+    res.status(500).send("Server Error");
+  }
+});
+
+// @router    PUT api/posts/comment/:post_id
+// @desc      Comment a post
+// @access    Private
+router.put(
+  "/comment/:post_id",
+  [
+    auth,
+    [
+      check("text", "Text is required")
+        .not()
+        .isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    // Finds the validation errors in this request
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    try {
+      const user = await User.findById(req.user.id, "name avatar"); //get only the name & avatar fields with the user;
+      let post = await Post.findById(req.params.post_id);
+
+      // Create & insert new comment
+      post.comments.unshift({
+        owner: req.user.id,
+        text: req.body.text,
+        name: user.name,
+        avatar: user.avatar
+      });
+
+      post = await post.save();
+
+      res.json(post.comments);
+    } catch (e) {
+      console.error(e.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+// @router    DELETE api/posts/comment/:post_id/:comment_id
+// @desc      Delete a comment
+// @access    Private
+router.delete("/comment/:post_id/:comment_id", auth, async (req, res) => {
+  try {
+    let post = await Post.findById(req.params.post_id);
+    if (!post) return res.status(404).json({ msg: "Post not found" });
+
+    const comment = post.comments.find(
+      comment => comment._id.toString() === req.params.comment_id
+    );
+
+    if (!comment) return res.status(404).json({ msg: "Comment not found" });
+
+    // Check if user deleting the comment is the same as the user who created the comment
+    if (req.user.id !== comment.owner.toString()) {
+      return res.status(403).json({ msg: "Forbidden" });
+    }
+
+    post.comments = post.comments.filter(
+      comment => comment._id.toString() !== req.params.comment_id
+    );
+
+    post = await post.save();
+
+    res.json(post.comments);
+  } catch (e) {
+    console.error(e.message);
+    if (e.kind == "ObjectId") {
+      //this is run when the user ID is invalid ObjectId
+      return res.status(404).json({ msg: "Not found" });
     }
 
     res.status(500).send("Server Error");
