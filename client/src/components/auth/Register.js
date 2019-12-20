@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { registerUser } from "../../actions";
+import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
+import { registerUser } from "../../actions";
 
 const Register = ({ handleSubmit, registerUser }) => {
   const onSubmit = formValues => {
@@ -10,7 +11,7 @@ const Register = ({ handleSubmit, registerUser }) => {
 
   return (
     <React.Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
+      <h1 className="large text-primary">Register</h1>
       <p className="lead">
         <i className="fas fa-user" /> Create Your Account
       </p>
@@ -20,38 +21,33 @@ const Register = ({ handleSubmit, registerUser }) => {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
-        <Field
-          name="name"
-          component={renderInput}
-          label="Enter Name"
-          type="text"
-        />
+        <Field name="name" component={renderInput} label="Name" type="text" />
 
         <Field
           name="email"
           component={renderInput}
-          label="Enter email"
+          label="Email"
           type="email"
         />
 
         <Field
           name="password"
           component={renderInput}
-          label="Enter password"
+          label="Password"
           type="password"
         />
 
         <Field
           name="password2"
           component={renderInput}
-          label="Re-enter password"
+          label="Password"
           type="password"
         />
 
         <button className="btn btn-primary">Register</button>
       </form>
       <p className="my-1">
-        Already have an account? <a href="login.html">Sign In</a>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </React.Fragment>
   );
@@ -61,8 +57,10 @@ const renderInput = ({ input, meta, label, type }) => {
   const className = `field ${meta.error && meta.touched ? "error" : ""}`;
   return (
     <div className={className}>
-      <label>{label}</label>
-      <input {...input} type={type} autoComplete="off" />
+      <label>
+        {input.name !== "password2" ? "Enter" : "Re-enter"} {label}
+      </label>
+      <input {...input} type={type} placeholder={label} autoComplete="off" />
       {renderError(meta)}
     </div>
   );

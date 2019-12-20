@@ -1,6 +1,6 @@
 import axios from "axios";
 import history from "../history";
-import { REGISTER_USER } from "./types";
+import { REGISTER_USER, LOGIN_USER } from "./types";
 //
 // export const signInOut = (isSignedIn, userId) => {
 // 	if (isSignedIn) {
@@ -22,5 +22,17 @@ export const registerUser = formValues => async (dispatch, getState) => {
     type: REGISTER_USER,
     payload: response.data
   });
+
+  history.push("/");
+};
+
+export const loginUser = formValues => async (dispatch, getState) => {
+  const response = await axios.post("/api/auth", formValues);
+
+  dispatch({
+    type: LOGIN_USER,
+    payload: response.data
+  });
+
   history.push("/");
 };
