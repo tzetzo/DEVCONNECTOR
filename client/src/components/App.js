@@ -5,6 +5,7 @@ import Navbar from "./layout/Navbar";
 import Landing from "./layout/Landing";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
+import Alerts from "./layout/Alerts";
 import "./App.css";
 
 const App = () => (
@@ -13,6 +14,7 @@ const App = () => (
       <Navbar />
       <Route path="/" exact component={Landing} />
       <section className="ui container">
+        <Alerts />
         <Switch>
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
