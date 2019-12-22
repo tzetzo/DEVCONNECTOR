@@ -1,6 +1,5 @@
 import axios from "axios";
 import uuid from "uuid";
-import history from "../history";
 import setAuthToken from "../utils/setAuthToken";
 import {
   REGISTER_SUCCESS,
@@ -13,7 +12,7 @@ import {
   USER_ERROR
 } from "./types";
 
-// Get current user
+// Get current user (after setting the token in the Headers for any axios requests)
 export const getCurrentUser = () => async (dispatch, getState) => {
   if (localStorage.token) {
     //sets the token in the Headers for future axios requests
@@ -45,7 +44,7 @@ export const registerUser = formValues => async (dispatch, getState) => {
       payload: response.data
     });
 
-    history.push("/");
+    dispatch(getCurrentUser());
   } catch (e) {
     // const errors = e.response.data.errors;
 
@@ -68,7 +67,7 @@ export const loginUser = formValues => async (dispatch, getState) => {
       payload: response.data
     });
 
-    history.push("/");
+    dispatch(getCurrentUser());
   } catch (e) {
     dispatch(setAlert(e.response.data, "danger"));
     dispatch({

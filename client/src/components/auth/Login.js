@@ -1,13 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
 import { loginUser } from "../../actions";
 
-const Login = ({ handleSubmit, loginUser }) => {
+const Login = ({ handleSubmit, loginUser, isAuthenticated }) => {
   const onSubmit = formValues => {
     loginUser(formValues);
   };
+
+  // Redirect user if he is already logged in
+  if (isAuthenticated) return <Redirect to="/dashboard" />;
 
   return (
     <React.Fragment>
@@ -84,10 +87,14 @@ const validateEmail = email =>
     email
   );
 
+const mapStateToProps = ({ auth }, ownProps) => {
+  return { isAuthenticated: auth.isAuthenticated };
+};
+
 //https://stackoverflow.com/questions/46791190/react-redux-form-and-connect-syntax
 export default reduxForm({ form: "login", validate })(
   connect(
-    null,
+    mapStateToProps,
     { loginUser }
   )(Login)
 );
