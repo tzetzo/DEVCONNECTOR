@@ -1,30 +1,65 @@
 import axios from "axios";
 import uuid from "uuid";
 import history from "../history";
-import { REGISTER_USER, LOGIN_USER, SET_ALERT, REMOVE_ALERT } from "./types";
+import {
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  SET_ALERT,
+  REMOVE_ALERT
+} from "./types";
 
 //REGISTER USER
 export const registerUser = formValues => async (dispatch, getState) => {
-  const response = await axios.post("/api/users", formValues);
+  try {
+    const response = await axios.post("/api/users", formValues);
 
-  dispatch({
-    type: REGISTER_USER,
-    payload: response.data
-  });
+    //Get the current user by sending the token in the request
+    const user = await axios.get("/api/auth", {
+      headers: { "x-auth-token": response.data.token }
+    });
 
-  history.push("/");
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: { ...response.data, user: { ...user.data } }
+    });
+
+    history.push("/");
+  } catch (e) {
+    // const errors = e.response.data.errors;
+
+    // if (errors)
+    //   errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+    dispatch(setAlert(e.response.data, "danger"));
+    dispatch({
+      type: REGISTER_FAIL
+    });
+  }
 };
 
 //LOGIN USER
 export const loginUser = formValues => async (dispatch, getState) => {
-  const response = await axios.post("/api/auth", formValues);
+  try {
+    const response = await axios.post("/api/auth", formValues);
 
-  dispatch({
-    type: LOGIN_USER,
-    payload: response.data
-  });
+    //Get the current user by sending the token in the request
+    const user = await axios.get("/api/auth", {
+      headers: { "x-auth-token": response.data.token }
+    });
 
-  history.push("/");
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: { ...response.data, user: { ...user.data } }
+    });
+
+    history.push("/");
+  } catch (e) {
+    dispatch(setAlert(e.response.data, "danger"));
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
 };
 
 //SET ALERT
