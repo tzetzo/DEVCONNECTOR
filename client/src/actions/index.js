@@ -9,7 +9,8 @@ import {
   SET_ALERT,
   REMOVE_ALERT,
   USER_LOADED,
-  USER_ERROR
+  USER_ERROR,
+  LOGOUT
 } from "./types";
 
 // Get current user (after setting the token in the Headers for any axios requests)
@@ -74,6 +75,13 @@ export const loginUser = formValues => async (dispatch, getState) => {
       type: LOGIN_FAIL
     });
   }
+};
+
+//LOGOUT
+export const logoutUser = () => (dispatch, getState) => {
+  dispatch({
+    type: LOGOUT
+  });
 };
 
 //SET ALERT
