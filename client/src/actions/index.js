@@ -1,28 +1,48 @@
 import axios from "axios";
 import uuid from "uuid";
 import history from "../history";
+import setAuthToken from "../utils/setAuthToken";
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   SET_ALERT,
-  REMOVE_ALERT
+  REMOVE_ALERT,
+  USER_LOADED,
+  USER_ERROR
 } from "./types";
+
+// Get current user
+export const getCurrentUser = () => async (dispatch, getState) => {
+  if (localStorage.token) {
+    //sets the token in the Headers for future axios requests
+    setAuthToken(localStorage.token);
+  }
+
+  try {
+    //Get the current user (token included in the request thanks to setAuthToken)
+    const user = await axios.get("/api/auth");
+
+    dispatch({
+      type: USER_LOADED,
+      payload: user.data
+    });
+  } catch (e) {
+    dispatch({
+      type: USER_ERROR
+    });
+  }
+};
 
 //REGISTER USER
 export const registerUser = formValues => async (dispatch, getState) => {
   try {
     const response = await axios.post("/api/users", formValues);
 
-    //Get the current user by sending the token in the request
-    const user = await axios.get("/api/auth", {
-      headers: { "x-auth-token": response.data.token }
-    });
-
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: { ...response.data, user: { ...user.data } }
+      payload: response.data
     });
 
     history.push("/");
@@ -43,14 +63,9 @@ export const loginUser = formValues => async (dispatch, getState) => {
   try {
     const response = await axios.post("/api/auth", formValues);
 
-    //Get the current user by sending the token in the request
-    const user = await axios.get("/api/auth", {
-      headers: { "x-auth-token": response.data.token }
-    });
-
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { ...response.data, user: { ...user.data } }
+      payload: response.data
     });
 
     history.push("/");

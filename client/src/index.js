@@ -16,7 +16,7 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
     : compose;
 
-const store = createStore(
+export const store = createStore(
   //export default store to access it outside a Component
   reducers,
   //initialState, //const initialState = {todos: [{ id: 123, name: 'example', completed: false }]}
