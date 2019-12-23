@@ -11,12 +11,20 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logoutUser }) => {
 
     if (isAuthenticated) {
       return (
-        <li>
-          <Link to={"/"} className={""} onClick={logoutUser}>
-            <i className="fas fa-sign-out-alt" />
-            <span className="hide-sm">Logout</span>
-          </Link>
-        </li>
+        <React.Fragment>
+          <li>
+            <Link to={"/dashboard"} className={""}>
+              <i className="fas fa-user" />
+              <span className="hide-sm">Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link to={"/"} className={""} onClick={logoutUser}>
+              <i className="fas fa-sign-out-alt" />
+              <span className="hide-sm">Logout</span>
+            </Link>
+          </li>
+        </React.Fragment>
       );
     }
 
