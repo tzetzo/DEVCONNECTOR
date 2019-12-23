@@ -1,4 +1,8 @@
-import { USER_PROFILE_LOADED, USER_PROFILE_ERROR } from "../actions/types";
+import {
+  USER_PROFILE_LOADED,
+  USER_PROFILE_ERROR,
+  USER_PROFILE_REMOVE
+} from "../actions/types";
 
 const INITIAL_STATE = {
   error: {},
@@ -22,6 +26,14 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload,
         loading: false
+      };
+
+    case USER_PROFILE_REMOVE:
+      return {
+        ...state,
+        loading: false,
+        profile: null,
+        repos: []
       };
 
     default:

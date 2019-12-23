@@ -8,7 +8,8 @@ import {
   LOGIN_FAIL,
   USER_LOADED,
   USER_ERROR,
-  LOGOUT
+  LOGOUT,
+  USER_PROFILE_REMOVE
 } from "./types";
 
 // Get current user (after setting the token in the Headers for any axios requests)
@@ -77,6 +78,8 @@ export const loginUser = formValues => async (dispatch, getState) => {
 
 //LOGOUT
 export const logoutUser = () => (dispatch, getState) => {
+  dispatch({ type: USER_PROFILE_REMOVE });
+
   dispatch({
     type: LOGOUT
   });
