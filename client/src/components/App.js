@@ -6,6 +6,8 @@ import Landing from "./layout/Landing";
 import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Alerts from "./layout/Alerts";
+import Dashboard from "./dashboard/Dashboard";
+import PrivateRoute from "./routing/PrivateRoute";
 import { getCurrentUser } from "../actions";
 import { store } from "../";
 import "./App.css";
@@ -27,6 +29,7 @@ const App = () => {
           <Switch>
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
+            <PrivateRoute path="/dashboard" exact component={Dashboard} />
           </Switch>
         </section>
       </React.Fragment>
