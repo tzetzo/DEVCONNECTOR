@@ -7,3 +7,5 @@ export const REMOVE_ALERT = "REMOVE_ALERT";
 export const USER_LOADED = "USER_LOADED";
 export const USER_ERROR = "USER_ERROR";
 export const LOGOUT = "LOGOUT";
+export const USER_PROFILE_LOADED = "USER_PROFILE_LOADED";
+export const USER_PROFILE_ERROR = "USER_PROFILE_ERROR";
