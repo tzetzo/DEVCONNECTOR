@@ -47,7 +47,9 @@ const Register = ({ handleSubmit, registerUser, isAuthenticated }) => {
           type="password"
         />
 
-        <button className="btn btn-primary">Register</button>
+        <button className="btn btn-primary" type="submit">
+          Register
+        </button>
       </form>
       <p className="my-1">
         Already have an account? <Link to="/login">Login</Link>

@@ -36,7 +36,9 @@ const Login = ({ handleSubmit, loginUser, isAuthenticated }) => {
           label="Password"
           type="password"
         />
-        <button className="btn btn-primary">Login</button>
+        <button className="btn btn-primary" type="submit">
+          Login
+        </button>
       </form>
       <p className="my-1">
         Don't have an account? <Link to="/register">Register</Link>

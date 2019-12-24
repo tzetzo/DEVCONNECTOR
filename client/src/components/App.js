@@ -7,6 +7,7 @@ import Register from "./auth/Register";
 import Login from "./auth/Login";
 import Alerts from "./layout/Alerts";
 import Dashboard from "./dashboard/Dashboard";
+import CreateProfile from "./profile-forms/CreateProfile";
 import PrivateRoute from "./routing/PrivateRoute";
 import { getCurrentUser } from "../actions";
 import { store } from "../";
@@ -30,6 +31,11 @@ const App = () => {
             <Route path="/register" exact component={Register} />
             <Route path="/login" exact component={Login} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <PrivateRoute
+              path="/create-profile"
+              exact
+              component={CreateProfile}
+            />
           </Switch>
         </section>
       </React.Fragment>
