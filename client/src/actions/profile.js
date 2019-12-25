@@ -1,6 +1,7 @@
 import axios from "axios";
 import history from "../history";
 import {
+  PROFILE_LOADING,
   USER_PROFILE_LOADED,
   USER_PROFILE_ERROR,
   USER_PROFILE_CREATED
@@ -9,6 +10,8 @@ import {
 
 // Get current user profile
 export const getCurrentUserProfile = () => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
   try {
     const userProfile = await axios.get("/api/profile/me");
 
@@ -27,6 +30,8 @@ export const getCurrentUserProfile = () => async (dispatch, getState) => {
 
 // Create user profile
 export const createProfile = formValues => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
   try {
     const userProfile = await axios.post("/api/profile", formValues);
 

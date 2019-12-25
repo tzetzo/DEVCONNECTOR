@@ -1,4 +1,5 @@
 import {
+  PROFILE_LOADING,
   USER_PROFILE_CREATED,
   USER_PROFILE_LOADED,
   USER_PROFILE_ERROR,
@@ -7,7 +8,7 @@ import {
 
 const INITIAL_STATE = {
   error: {},
-  loading: true,
+  loading: false,
   profile: null,
   profiles: [],
   repos: []
@@ -15,6 +16,9 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case PROFILE_LOADING:
+      return { ...state, loading: true };
+
     case USER_PROFILE_LOADED:
     case USER_PROFILE_CREATED:
       return {

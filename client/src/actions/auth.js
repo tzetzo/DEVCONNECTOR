@@ -2,6 +2,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./";
 import {
+  AUTH_LOADING,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGIN_SUCCESS,
@@ -14,6 +15,8 @@ import {
 
 // Get current user (after setting the token in the Headers for any axios requests)
 export const getCurrentUser = () => async (dispatch, getState) => {
+  dispatch({ type: AUTH_LOADING });
+
   if (localStorage.token) {
     //sets the token in the Headers for future axios requests
     setAuthToken(localStorage.token);
@@ -36,6 +39,8 @@ export const getCurrentUser = () => async (dispatch, getState) => {
 
 //REGISTER USER
 export const registerUser = formValues => async (dispatch, getState) => {
+  dispatch({ type: AUTH_LOADING });
+
   try {
     const response = await axios.post("/api/users", formValues);
 
@@ -59,6 +64,8 @@ export const registerUser = formValues => async (dispatch, getState) => {
 
 //LOGIN USER
 export const loginUser = formValues => async (dispatch, getState) => {
+  dispatch({ type: AUTH_LOADING });
+
   try {
     const response = await axios.post("/api/auth", formValues);
 
@@ -78,9 +85,9 @@ export const loginUser = formValues => async (dispatch, getState) => {
 
 //LOGOUT
 export const logoutUser = () => (dispatch, getState) => {
+  dispatch({ type: AUTH_LOADING });
+
   dispatch({ type: USER_PROFILE_REMOVE });
 
-  dispatch({
-    type: LOGOUT
-  });
+  dispatch({ type: LOGOUT });
 };

@@ -6,7 +6,7 @@ import { logoutUser } from "../../actions";
 const Navbar = ({ auth: { isAuthenticated, loading }, logoutUser }) => {
   const renderLinks = () => {
     if (loading) {
-      return <li>Loading...</li>;
+      return null;
     }
 
     if (isAuthenticated) {

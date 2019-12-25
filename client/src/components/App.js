@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import history from "../history";
+import Loading from "./layout/Loading";
 import Navbar from "./layout/Navbar";
 import Landing from "./layout/Landing";
 import Register from "./auth/Register";
@@ -24,19 +25,22 @@ const App = () => {
     <Router history={history}>
       <React.Fragment>
         <Navbar />
+
         <Route path="/" exact component={Landing} />
         <section className="ui container">
           <Alerts />
-          <Switch>
-            <Route path="/register" exact component={Register} />
-            <Route path="/login" exact component={Login} />
-            <PrivateRoute path="/dashboard" exact component={Dashboard} />
-            <PrivateRoute
-              path="/create-profile"
-              exact
-              component={CreateProfile}
-            />
-          </Switch>
+          <Loading>
+            <Switch>
+              <Route path="/register" exact component={Register} />
+              <Route path="/login" exact component={Login} />
+              <PrivateRoute path="/dashboard" exact component={Dashboard} />
+              <PrivateRoute
+                path="/create-profile"
+                exact
+                component={CreateProfile}
+              />
+            </Switch>
+          </Loading>
         </section>
       </React.Fragment>
     </Router>

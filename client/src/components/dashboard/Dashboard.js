@@ -4,7 +4,12 @@ import { Link } from "react-router-dom";
 import { getCurrentUserProfile } from "../../actions";
 import Spinner from "../layout/Spinner";
 
-const Dashboard = ({ getCurrentUserProfile, profile, loading, user }) => {
+const Dashboard = ({
+  getCurrentUserProfile,
+  profile,
+  loadingProfile,
+  user
+}) => {
   useEffect(
     () => {
       getCurrentUserProfile();
@@ -12,7 +17,7 @@ const Dashboard = ({ getCurrentUserProfile, profile, loading, user }) => {
     [getCurrentUserProfile]
   );
 
-  if (loading || user === null) return <Spinner />;
+  if (loadingProfile || user === null) return <Spinner />;
 
   return (
     <React.Fragment>
@@ -39,7 +44,7 @@ const mapStateToProps = ({ auth, profile }, ownProps) => {
   return {
     user: auth.user,
     profile: profile.profile,
-    loading: profile.loading
+    loadingProfile: profile.loading
   };
 };
 
