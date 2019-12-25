@@ -51,11 +51,6 @@ export const registerUser = formValues => async (dispatch, getState) => {
 
     dispatch(getCurrentUser());
   } catch (e) {
-    // const errors = e.response.data.errors;
-
-    // if (errors)
-    //   errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
-    dispatch(setAlert(e.response.data, "danger"));
     dispatch({
       type: REGISTER_FAIL
     });
@@ -76,7 +71,6 @@ export const loginUser = formValues => async (dispatch, getState) => {
 
     dispatch(getCurrentUser());
   } catch (e) {
-    dispatch(setAlert(e.response.data, "danger"));
     dispatch({
       type: LOGIN_FAIL
     });

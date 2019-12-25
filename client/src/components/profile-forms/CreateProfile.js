@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { createProfile } from "../../actions";
+import { createOrEditProfile } from "../../actions";
 
-const CreateProfile = ({ handleSubmit, createProfile }) => {
+const CreateProfile = ({ handleSubmit, createOrEditProfile }) => {
   const [socialLinksOn, toggleSocialLinksOn] = useState(false);
 
   const onSubmit = formValues => {
-    createProfile(formValues);
+    createOrEditProfile(formValues);
   };
 
   return (
@@ -210,6 +210,6 @@ const validate = formValues => {
 export default reduxForm({ form: "createProfile", validate })(
   connect(
     null,
-    { createProfile }
+    { createOrEditProfile }
   )(CreateProfile)
 );
