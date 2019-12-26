@@ -9,6 +9,7 @@ import Login from "./auth/Login";
 import Alerts from "./layout/Alerts";
 import Dashboard from "./dashboard/Dashboard";
 import CreateProfile from "./profile-forms/CreateProfile";
+import EditProfile from "./profile-forms/EditProfile";
 import PrivateRoute from "./routing/PrivateRoute";
 import { getCurrentUser } from "../actions";
 import { store } from "../";
@@ -38,6 +39,11 @@ const App = () => {
                 path="/create-profile"
                 exact
                 component={CreateProfile}
+              />
+              <PrivateRoute
+                path="/edit-profile"
+                exact
+                component={EditProfile}
               />
             </Switch>
           </Loading>
