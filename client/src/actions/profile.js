@@ -5,7 +5,8 @@ import {
   PROFILE_LOADING,
   USER_PROFILE_LOADED,
   USER_PROFILE_ERROR,
-  USER_PROFILE_CREATED
+  USER_PROFILE_CREATED,
+  USER_PROFILE_UPDATED
 } from "./types";
 // import { setAlert } from "./setAlert";
 
@@ -52,6 +53,66 @@ export const createOrEditProfile = (formValues, edit = false) => async (
     });
 
     dispatch(setAlert(edit ? "Profile Updated" : "Profile Created", "success"));
+
+    history.push("/dashboard");
+  } catch (e) {
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Add user profile Experience
+export const addExperience = formValues => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  // If the form hasnt been interacted with the formValues.skills are returned
+  // as array instead of string which is what the back-end expects
+  // If the form has been interacted with a string is returned
+  // if (typeof formValues.skills === "object") {
+  //   formValues.skills = formValues.skills.join(",");
+  // }
+
+  try {
+    const userProfile = await axios.put("/api/profile/experience", formValues);
+
+    dispatch({
+      type: USER_PROFILE_UPDATED,
+      payload: userProfile.data
+    });
+
+    dispatch(setAlert("Experience added", "success"));
+
+    history.push("/dashboard");
+  } catch (e) {
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Add user profile Education
+export const addEducation = formValues => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  // If the form hasnt been interacted with the formValues.skills are returned
+  // as array instead of string which is what the back-end expects
+  // If the form has been interacted with a string is returned
+  // if (typeof formValues.skills === "object") {
+  //   formValues.skills = formValues.skills.join(",");
+  // }
+
+  try {
+    const userProfile = await axios.put("/api/profile/education", formValues);
+
+    dispatch({
+      type: USER_PROFILE_UPDATED,
+      payload: userProfile.data
+    });
+
+    dispatch(setAlert("Education added", "success"));
 
     history.push("/dashboard");
   } catch (e) {

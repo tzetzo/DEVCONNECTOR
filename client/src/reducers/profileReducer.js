@@ -3,7 +3,8 @@ import {
   USER_PROFILE_CREATED,
   USER_PROFILE_LOADED,
   USER_PROFILE_ERROR,
-  USER_PROFILE_REMOVE
+  USER_PROFILE_REMOVE,
+  USER_PROFILE_UPDATED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -21,6 +22,7 @@ export default (state = INITIAL_STATE, action) => {
 
     case USER_PROFILE_LOADED:
     case USER_PROFILE_CREATED:
+    case USER_PROFILE_UPDATED:
       return {
         ...state,
         loading: false,

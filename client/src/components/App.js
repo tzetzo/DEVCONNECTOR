@@ -10,6 +10,7 @@ import Alerts from "./layout/Alerts";
 import Dashboard from "./dashboard/Dashboard";
 import CreateProfile from "./profile-forms/CreateProfile";
 import EditProfile from "./profile-forms/EditProfile";
+import AddExperience from "./profile-forms/AddExperience";
 import PrivateRoute from "./routing/PrivateRoute";
 import { getCurrentUser } from "../actions";
 import { store } from "../";
@@ -44,6 +45,11 @@ const App = () => {
                 path="/edit-profile"
                 exact
                 component={EditProfile}
+              />
+              <PrivateRoute
+                path="/add-experience"
+                exact
+                component={AddExperience}
               />
             </Switch>
           </Loading>
