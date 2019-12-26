@@ -23,7 +23,10 @@ const EditProfile = ({
   return (
     <React.Fragment>
       <h1 className="large text-primary">Edit Your Profile</h1>
-      <ProfileForm onSubmit={onSubmit} initialValues={profile} />
+      <ProfileForm
+        onSubmit={onSubmit}
+        initialValues={{ ...profile, ...profile.social }}
+      />
     </React.Fragment>
   );
 };
