@@ -207,9 +207,15 @@ const validate = formValues => {
   return errors;
 };
 
-export default reduxForm({ form: "createProfile", validate })(
-  connect(
-    null,
-    { createOrEditProfile }
-  )(CreateProfile)
+// When we want to pass data to our form we need to wrap the Component with reduxForm
+//https://stackoverflow.com/questions/46791190/react-redux-form-and-connect-syntax
+export default connect(
+  null,
+  { createOrEditProfile }
+)(
+  reduxForm({
+    form: "createProfile",
+    validate //,
+    //enableReinitialize: true
+  })(CreateProfile)
 );

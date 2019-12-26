@@ -93,10 +93,15 @@ const mapStateToProps = ({ auth }, ownProps) => {
   return { isAuthenticated: auth.isAuthenticated };
 };
 
+// When we want to pass data to our form we need to wrap the Component with reduxForm
 //https://stackoverflow.com/questions/46791190/react-redux-form-and-connect-syntax
-export default reduxForm({ form: "login", validate })(
-  connect(
-    mapStateToProps,
-    { loginUser }
-  )(Login)
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(
+  reduxForm({
+    form: "login",
+    validate //,
+    //enableReinitialize: true
+  })(Login)
 );
