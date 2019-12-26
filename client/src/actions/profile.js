@@ -36,6 +36,13 @@ export const createOrEditProfile = (formValues, edit = false) => async (
 ) => {
   dispatch({ type: PROFILE_LOADING });
 
+  // If the form hasnt been interacted with the formValues.skills are returned
+  // as array instead of string which is what the back-end expects
+  // If the form has been interacted with a string is returned
+  if (typeof formValues.skills === "object") {
+    formValues.skills = formValues.skills.join(",");
+  }
+
   try {
     const userProfile = await axios.post("/api/profile", formValues);
 

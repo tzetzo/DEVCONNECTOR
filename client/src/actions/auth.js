@@ -1,6 +1,6 @@
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
-import { setAlert } from "./";
+
 import {
   AUTH_LOADING,
   REGISTER_SUCCESS,
