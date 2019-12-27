@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { addExperience } from "../../actions";
+import { addEducation } from "../../actions";
 
-const AddExperience = ({ handleSubmit, addExperience }) => {
+const AddEducation = ({ handleSubmit, addEducation }) => {
   const [toDateDisabled, toggleToDateDisabled] = useState(false);
 
   const onSubmit = formValues => {
@@ -12,40 +12,40 @@ const AddExperience = ({ handleSubmit, addExperience }) => {
     // we delete the latter before sending
     if (formValues.current && formValues.to) delete formValues.to;
 
-    addExperience(formValues);
+    addEducation(formValues);
   };
 
   return (
     <React.Fragment>
-      <h1 className="large text-primary">Add An Experience</h1>
+      <h1 className="large text-primary">Add Your Education</h1>
       <p className="lead">
-        <i className="fas fa-code-branch" /> Add any developer/programming
-        positions that you have had in the past
+        <i className="fas fa-code-branch" /> Add any school or bootcamp that you
+        have attended
       </p>
       <small>* = required field</small>
       <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <Field
-          name="title"
+          name="degree"
           component={renderInput}
-          label="* Title"
+          label="* Degree"
           type="text"
-          placeholder="Job Title"
+          placeholder="Degree or Certificate"
         />
 
         <Field
-          name="company"
+          name="school"
           component={renderInput}
-          label="* Company"
+          label="* School"
           type="text"
-          placeholder="Company name"
+          placeholder="School or Bootcamp"
         />
 
         <Field
-          name="location"
+          name="fieldofstudy"
           component={renderInput}
-          label="Location"
+          label="Field of Study"
           type="text"
-          placeholder="Location"
+          placeholder="Field of Study"
         />
 
         <Field
@@ -76,7 +76,7 @@ const AddExperience = ({ handleSubmit, addExperience }) => {
           component={renderInput}
           label="Description"
           type="textarea"
-          placeholder="Job description"
+          placeholder="Program description"
         />
 
         <button className="btn btn-primary my-1" type="submit">
@@ -130,12 +130,16 @@ const validate = formValues => {
   const errors = {};
 
   // We need to validate at least the fields that are required by the Back-End!
-  if (!formValues.title) {
-    errors.title = "You must enter title";
+  if (!formValues.degree) {
+    errors.degree = "You must enter degree";
   }
 
-  if (!formValues.company) {
-    errors.company = "You must enter company";
+  if (!formValues.school) {
+    errors.school = "You must enter school";
+  }
+
+  if (!formValues.fieldofstudy) {
+    errors.fieldofstudy = "You must enter Field of Study";
   }
 
   if (!formValues.from) {
@@ -153,11 +157,11 @@ const validate = formValues => {
 //https://stackoverflow.com/questions/46791190/react-redux-form-and-connect-syntax
 export default connect(
   null,
-  { addExperience }
+  { addEducation }
 )(
   reduxForm({
-    form: "addExperience",
+    form: "addEducation",
     validate //,
     //enableReinitialize: true
-  })(AddExperience)
+  })(AddEducation)
 );

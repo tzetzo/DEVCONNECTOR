@@ -67,13 +67,6 @@ export const createOrEditProfile = (formValues, edit = false) => async (
 export const addExperience = formValues => async (dispatch, getState) => {
   dispatch({ type: PROFILE_LOADING });
 
-  // If the form hasnt been interacted with the formValues.skills are returned
-  // as array instead of string which is what the back-end expects
-  // If the form has been interacted with a string is returned
-  // if (typeof formValues.skills === "object") {
-  //   formValues.skills = formValues.skills.join(",");
-  // }
-
   try {
     const userProfile = await axios.put("/api/profile/experience", formValues);
 
@@ -96,13 +89,6 @@ export const addExperience = formValues => async (dispatch, getState) => {
 // Add user profile Education
 export const addEducation = formValues => async (dispatch, getState) => {
   dispatch({ type: PROFILE_LOADING });
-
-  // If the form hasnt been interacted with the formValues.skills are returned
-  // as array instead of string which is what the back-end expects
-  // If the form has been interacted with a string is returned
-  // if (typeof formValues.skills === "object") {
-  //   formValues.skills = formValues.skills.join(",");
-  // }
 
   try {
     const userProfile = await axios.put("/api/profile/education", formValues);
