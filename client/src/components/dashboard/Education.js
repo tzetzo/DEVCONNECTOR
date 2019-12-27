@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-//import { deleteEducation } from '../actions';
+import { deleteEducation } from "../../actions";
 
-const Education = ({ educations }) => {
+const Education = ({ educations, deleteEducation }) => {
   educations = educations.map(edu => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
@@ -13,7 +13,12 @@ const Education = ({ educations }) => {
         {edu.to ? <Moment format="YYYY/MM/DD">{edu.to}</Moment> : " Now"}
       </td>
       <td>
-        <button className="btn btn-danger">Delete</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => deleteEducation(edu._id)}
+        >
+          Delete
+        </button>
       </td>
     </tr>
   ));
@@ -36,11 +41,7 @@ const Education = ({ educations }) => {
   );
 };
 
-// const mapStateToProps = ({ auth }, ownProps) => {
-//   return { isSignedIn: auth.isSignedIn };
-// };
-
 export default connect(
-  null
-  //{ deleteEducation }
+  null,
+  { deleteEducation }
 )(Education);

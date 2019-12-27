@@ -6,7 +6,9 @@ import {
   USER_PROFILE_LOADED,
   USER_PROFILE_ERROR,
   USER_PROFILE_CREATED,
-  USER_PROFILE_UPDATED
+  USER_PROFILE_UPDATED,
+  USER_DELETED,
+  USER_PROFILE_REMOVE
 } from "./types";
 // import { setAlert } from "./setAlert";
 
@@ -106,5 +108,69 @@ export const addEducation = formValues => async (dispatch, getState) => {
       type: USER_PROFILE_ERROR,
       payload: { msg: e.response.statusText, status: e.response.status }
     });
+  }
+};
+
+// Delete user profile Experience
+export const deleteExperience = id => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  try {
+    const userProfile = await axios.delete(`/api/profile/experience/${id}`);
+
+    dispatch({
+      type: USER_PROFILE_UPDATED,
+      payload: userProfile.data
+    });
+
+    dispatch(setAlert("Experience deleted", "success"));
+  } catch (e) {
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Delete user profile Education
+export const deleteEducation = id => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  try {
+    const userProfile = await axios.delete(`/api/profile/education/${id}`);
+
+    dispatch({
+      type: USER_PROFILE_UPDATED,
+      payload: userProfile.data
+    });
+
+    dispatch(setAlert("Education deleted", "success"));
+  } catch (e) {
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Delete user profile & the user itself
+export const deleteProfileAndUser = () => async (dispatch, getState) => {
+  if (window.confirm("Are you sure? This can NOT be undone!")) {
+    dispatch({ type: PROFILE_LOADING });
+
+    try {
+      await axios.delete("/api/profile");
+
+      dispatch({ type: USER_PROFILE_REMOVE });
+
+      dispatch({ type: USER_DELETED });
+
+      dispatch(setAlert("User and his Profile deleted", "success"));
+    } catch (e) {
+      dispatch({
+        type: USER_PROFILE_ERROR,
+        payload: { msg: e.response.statusText, status: e.response.status }
+      });
+    }
   }
 };

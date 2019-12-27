@@ -58,7 +58,7 @@ const AddEducation = ({ handleSubmit, addEducation }) => {
         <Field
           name="current"
           component={renderInput}
-          label="Current Job?"
+          label="Current School?"
           type="checkbox"
           onChange={() => toggleToDateDisabled(prev => !prev)}
         />

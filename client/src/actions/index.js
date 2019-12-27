@@ -6,5 +6,8 @@ export {
   getCurrentUserProfile,
   createOrEditProfile,
   addExperience,
-  addEducation
+  addEducation,
+  deleteExperience,
+  deleteEducation,
+  deleteProfileAndUser
 } from "./profile";
