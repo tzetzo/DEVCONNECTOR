@@ -8,7 +8,9 @@ import {
   USER_PROFILE_CREATED,
   USER_PROFILE_UPDATED,
   USER_DELETED,
-  USER_PROFILE_REMOVE
+  USER_PROFILE_REMOVE,
+  PROFILES_LOADED,
+  USER_REPOS_LOADED
 } from "./types";
 // import { setAlert } from "./setAlert";
 
@@ -172,5 +174,67 @@ export const deleteProfileAndUser = () => async (dispatch, getState) => {
         payload: { msg: e.response.statusText, status: e.response.status }
       });
     }
+  }
+};
+
+// Get all profiles
+export const getProfiles = () => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  dispatch({ type: USER_PROFILE_REMOVE });
+
+  try {
+    const profiles = await axios.get("/api/profile");
+
+    dispatch({
+      type: PROFILES_LOADED,
+      payload: profiles.data
+    });
+  } catch (e) {
+    // console.log(e.response);
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Get profile by ID
+export const getProfileById = userId => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  try {
+    const profile = await axios.get(`/api/profile/${userId}`);
+
+    dispatch({
+      type: USER_PROFILE_LOADED,
+      payload: profile.data
+    });
+  } catch (e) {
+    // console.log(e.response);
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Get user Github repos
+export const getUserGithubRepos = username => async (dispatch, getState) => {
+  dispatch({ type: PROFILE_LOADING });
+
+  try {
+    const userRepos = await axios.get(`/api/profile/github/${username}`);
+
+    dispatch({
+      type: USER_REPOS_LOADED,
+      payload: userRepos.data
+    });
+  } catch (e) {
+    // console.log(e.response);
+    dispatch({
+      type: USER_PROFILE_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
   }
 };

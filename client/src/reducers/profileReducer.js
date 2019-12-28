@@ -4,7 +4,9 @@ import {
   USER_PROFILE_LOADED,
   USER_PROFILE_ERROR,
   USER_PROFILE_REMOVE,
-  USER_PROFILE_UPDATED
+  USER_PROFILE_UPDATED,
+  PROFILES_LOADED,
+  USER_REPOS_LOADED
 } from "../actions/types";
 
 const INITIAL_STATE = {
@@ -42,6 +44,19 @@ export default (state = INITIAL_STATE, action) => {
         loading: false,
         profile: null,
         repos: []
+      };
+
+    case PROFILES_LOADED:
+      return {
+        ...state,
+        loading: false,
+        profiles: action.payload
+      };
+    case USER_REPOS_LOADED:
+      return {
+        ...state,
+        loading: false,
+        repos: action.payload
       };
 
     default:
