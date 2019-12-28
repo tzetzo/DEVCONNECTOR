@@ -13,6 +13,11 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logoutUser }) => {
       return (
         <React.Fragment>
           <li>
+            <Link to={"/profiles"} className={""}>
+              Developers
+            </Link>
+          </li>
+          <li>
             <Link to={"/dashboard"} className={""}>
               <i className="fas fa-user" />
               <span className="hide-sm">Dashboard</span>
@@ -31,7 +36,9 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logoutUser }) => {
     return (
       <React.Fragment>
         <li>
-          <a href="profiles.html">Developers</a>
+          <Link to={"/profiles"} className={""}>
+            Developers
+          </Link>
         </li>
         <li>
           <Link to={"/register"} className={""}>
