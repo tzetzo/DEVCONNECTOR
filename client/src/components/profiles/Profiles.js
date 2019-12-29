@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import ProfileItem from "./ProfileItem";
+import Spinner from "../layout/Spinner";
 import { getProfiles } from "../../actions";
 
-const Profiles = ({ getProfiles, profiles }) => {
+const Profiles = ({ getProfiles, profiles, loadingProfiles }) => {
   useEffect(
     () => {
       getProfiles();
     },
     [getProfiles]
   );
+
+  if (loadingProfiles) return <Spinner />;
 
   return (
     <React.Fragment>
@@ -29,6 +32,7 @@ const Profiles = ({ getProfiles, profiles }) => {
       ) : (
         <div className="profiles">
           <h4>No profiles found...</h4>
+          <h5>Check your Internet connection</h5>
         </div>
       )}
     </React.Fragment>
@@ -36,7 +40,7 @@ const Profiles = ({ getProfiles, profiles }) => {
 };
 
 const mapStateToProps = ({ profile }, ownProps) => {
-  return { profiles: profile.profiles };
+  return { profiles: profile.profiles, loadingProfiles: profile.loading };
 };
 
 export default connect(

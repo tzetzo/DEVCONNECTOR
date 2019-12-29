@@ -191,7 +191,6 @@ export const getProfiles = () => async (dispatch, getState) => {
       payload: profiles.data
     });
   } catch (e) {
-    // console.log(e.response);
     dispatch({
       type: USER_PROFILE_ERROR,
       payload: { msg: e.response.statusText, status: e.response.status }
@@ -214,7 +213,7 @@ export const getProfileById = userId => async (dispatch, getState) => {
     // console.log(e.response);
     dispatch({
       type: USER_PROFILE_ERROR,
-      payload: { msg: e.response.statusText, status: e.response.status }
+      payload: { msg: e.response }
     });
   }
 };
