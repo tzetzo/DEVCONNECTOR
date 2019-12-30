@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Spinner from "../layout/Spinner";
+import ProfileTop from "./ProfileTop";
+import ProfileAbout from "./ProfileAbout";
 import { getProfileById } from "../../actions";
 
 const Profile = ({
@@ -16,7 +18,7 @@ const Profile = ({
     () => {
       getProfileById(match.params.id);
     },
-    [getProfileById]
+    [getProfileById, match.params.id]
   );
 
   if (loadingProfile) return <Spinner />;
@@ -36,7 +38,10 @@ const Profile = ({
                 Edit Profile
               </Link>
             )}
-          <div className="profiles">{profile.company}</div>
+          <div className="profile-grid my-1">
+            <ProfileTop profile={profile} />
+            <ProfileAbout profile={profile} />
+          </div>
         </React.Fragment>
       ) : (
         <div className="profiles">
