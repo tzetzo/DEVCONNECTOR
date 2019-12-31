@@ -4,15 +4,20 @@ import { Link } from "react-router-dom";
 import Spinner from "../layout/Spinner";
 import ProfileTop from "./ProfileTop";
 import ProfileAbout from "./ProfileAbout";
-import { getProfileById } from "../../actions";
+import ProfileExperience from "./ProfileExperience";
+import ProfileEducation from "./ProfileEducation";
+import ProfileGithub from "./ProfileGithub";
+import { getProfileById, getUserGithubRepos } from "../../actions";
 
 const Profile = ({
   getProfileById,
+  getUserGithubRepos,
   match,
   user,
   isAuthenticated,
   profile,
-  loadingProfile
+  loadingProfile,
+  repos
 }) => {
   useEffect(
     () => {
@@ -20,6 +25,41 @@ const Profile = ({
     },
     [getProfileById, match.params.id]
   );
+
+  useEffect(
+    () => {
+      if (profile) getUserGithubRepos(profile.githubusername);
+    },
+    [profile, getUserGithubRepos]
+  );
+
+  const renderExperience = () => {
+    if (profile.experience.length > 0) {
+      return (
+        <React.Fragment>
+          {profile.experience.map(exp => (
+            <ProfileExperience key={exp._id} experience={exp} />
+          ))}
+        </React.Fragment>
+      );
+    }
+
+    return <h4>No experience credentials</h4>;
+  };
+
+  const renderEducation = () => {
+    if (profile.education.length > 0) {
+      return (
+        <React.Fragment>
+          {profile.education.map(edu => (
+            <ProfileEducation key={edu._id} education={edu} />
+          ))}
+        </React.Fragment>
+      );
+    }
+
+    return <h4>No education credentials</h4>;
+  };
 
   if (loadingProfile) return <Spinner />;
 
@@ -41,6 +81,15 @@ const Profile = ({
           <div className="profile-grid my-1">
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
+            <div className="profile-exp bg-white p-2">
+              <h2 className="text-primary">Experience</h2>
+              {renderExperience()}
+            </div>
+            <div className="profile-edu bg-white p-2">
+              <h2 className="text-primary">Education</h2>
+              {renderEducation()}
+            </div>
+            <ProfileGithub repos={repos} />
           </div>
         </React.Fragment>
       ) : (
@@ -58,11 +107,12 @@ const mapStateToProps = ({ auth, profile }) => {
     user: auth.user,
     isAuthenticated: auth.isAuthenticated,
     profile: profile.profile,
-    loadingProfile: profile.loading
+    loadingProfile: profile.loading,
+    repos: profile.repos
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getProfileById }
+  { getProfileById, getUserGithubRepos }
 )(Profile);

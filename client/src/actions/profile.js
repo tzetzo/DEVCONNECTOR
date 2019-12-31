@@ -230,7 +230,6 @@ export const getUserGithubRepos = username => async (dispatch, getState) => {
       payload: userRepos.data
     });
   } catch (e) {
-    // console.log(e.response);
     dispatch({
       type: USER_PROFILE_ERROR,
       payload: { msg: e.response.statusText, status: e.response.status }
