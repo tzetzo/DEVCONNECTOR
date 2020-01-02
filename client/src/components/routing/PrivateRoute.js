@@ -3,9 +3,9 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 const PrivateRoute = ({ isAuthenticated, loading, ...rest }) =>
-  isAuthenticated ? <Route {...rest} /> : <Redirect to="/login" />;
+  localStorage.token ? <Route {...rest} /> : <Redirect to="/login" />;
 
-// Second version:
+// // Second version:
 // const PrivateRoute = ({
 //   component: Component,
 //   isAuthenticated,
