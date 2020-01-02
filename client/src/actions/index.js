@@ -14,3 +14,5 @@ export {
   getProfileById,
   getUserGithubRepos
 } from "./profile";
+
+export { getPosts } from "./posts";

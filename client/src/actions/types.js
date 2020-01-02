@@ -19,3 +19,9 @@ export const USER_DELETED = "USER_DELETED";
 
 export const PROFILES_LOADED = "PROFILES_LOADED";
 export const USER_REPOS_LOADED = "USER_REPOS_LOADED";
+
+export const POST_CREATED = "POST_CREATED";
+export const POST_LOADED = "POST_LOADED";
+export const POSTS_ERROR = "POSTS_ERROR";
+export const POSTS_LOADED = "POSTS_LOADED";
+export const POSTS_LOADING = "POSTS_LOADING";
