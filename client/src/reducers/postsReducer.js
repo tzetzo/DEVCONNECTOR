@@ -1,5 +1,6 @@
 import {
   POST_CREATED,
+  POST_LIKES_UPDATED,
   POST_LOADED,
   POSTS_ERROR,
   POSTS_LOADED,
@@ -23,6 +24,15 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
     case POSTS_ERROR:
       return { ...state, error: payload, loading: false };
+
+    case POST_LIKES_UPDATED:
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts.map(post =>
+          post._id === payload.postId ? { ...post, likes: payload.likes } : post
+        )
+      };
 
     default:
       return state;

@@ -20,7 +20,7 @@ const Posts = ({ getPosts, loadingPosts, posts }) => {
       <p className="lead">
         <i className="fas fa-user" /> Welcome to the community!
       </p>
-      //form
+      {/*form*/}
       <div className="posts">
         {posts.map(post => (
           <PostItem key={post._id} post={post} />
