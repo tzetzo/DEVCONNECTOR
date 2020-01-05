@@ -15,4 +15,4 @@ export {
   getUserGithubRepos
 } from "./profile";
 
-export { getPosts, updateLikes } from "./posts";
+export { deletePost, getPosts, updateLikes } from "./posts";

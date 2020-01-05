@@ -1,5 +1,6 @@
 import {
   POST_CREATED,
+  POST_DELETED,
   POST_LIKES_UPDATED,
   POST_LOADED,
   POSTS_ERROR,
@@ -24,6 +25,13 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
     case POSTS_ERROR:
       return { ...state, error: payload, loading: false };
+
+    case POST_DELETED:
+      return {
+        ...state,
+        loading: false,
+        posts: state.posts.filter(post => post._id !== payload)
+      };
 
     case POST_LIKES_UPDATED:
       return {

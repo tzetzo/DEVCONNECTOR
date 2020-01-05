@@ -2,12 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
-import { updateLikes } from "../../actions";
+import { deletePost, updateLikes } from "../../actions";
 
 const PostItem = ({
   user,
   isAuthenticated,
   post: { _id, text, name, avatar, owner, likes, comments, date },
+  deletePost,
   updateLikes
 }) => (
   <div className="post bg-white p-1 my-1">
@@ -45,7 +46,11 @@ const PostItem = ({
         ) : null}
       </Link>
       {owner === user._id && isAuthenticated && (
-        <button type="button" className="btn btn-danger">
+        <button
+          type="button"
+          className="btn btn-danger"
+          onClick={e => deletePost(_id)}
+        >
           <i className="fas fa-times" />
         </button>
       )}
@@ -59,5 +64,5 @@ const mapStateToProps = ({ auth }, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { updateLikes }
+  { deletePost, updateLikes }
 )(PostItem);
