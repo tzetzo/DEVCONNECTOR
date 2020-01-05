@@ -45,6 +45,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
         )
       };
 
+    case POST_LOADED:
+      return { ...state, loading: false, post: payload };
+
     default:
       return state;
   }

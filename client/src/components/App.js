@@ -15,6 +15,7 @@ import AddEducation from "./profile-forms/AddEducation";
 import Profiles from "./profiles/Profiles";
 import Profile from "./profile/Profile";
 import Posts from "./posts/Posts";
+import Post from "./post/Post";
 import PrivateRoute from "./routing/PrivateRoute";
 import { getCurrentUser } from "../actions";
 import { store } from "../";
@@ -63,6 +64,7 @@ const App = () => {
                 component={AddEducation}
               />
               <PrivateRoute path="/posts" exact component={Posts} />
+              <PrivateRoute path="/posts/:id" exact component={Post} />
             </Switch>
           </Loading>
         </section>

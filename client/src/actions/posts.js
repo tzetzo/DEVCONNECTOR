@@ -94,3 +94,22 @@ export const createPost = formValues => async (dispatch, getState) => {
     });
   }
 };
+
+// Get a Post by ID
+export const getPost = postId => async (dispatch, getState) => {
+  dispatch({ type: POSTS_LOADING });
+
+  try {
+    const post = await axios.get(`/api/posts/${postId}`);
+
+    dispatch({
+      type: POST_LOADED,
+      payload: post.data
+    });
+  } catch (e) {
+    dispatch({
+      type: POSTS_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
