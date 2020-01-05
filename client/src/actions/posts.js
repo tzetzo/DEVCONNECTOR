@@ -73,3 +73,24 @@ export const deletePost = postId => async (dispatch, getState) => {
     });
   }
 };
+
+// Create a Post
+export const createPost = formValues => async (dispatch, getState) => {
+  dispatch({ type: POSTS_LOADING });
+
+  try {
+    const post = await axios.post("/api/posts", formValues);
+
+    dispatch({
+      type: POST_CREATED,
+      payload: post.data
+    });
+
+    dispatch(setAlert("Post created", "success"));
+  } catch (e) {
+    dispatch({
+      type: POSTS_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};

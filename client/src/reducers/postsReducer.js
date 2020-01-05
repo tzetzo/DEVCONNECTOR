@@ -26,6 +26,9 @@ export default (state = INITIAL_STATE, { type, payload }) => {
     case POSTS_ERROR:
       return { ...state, error: payload, loading: false };
 
+    case POST_CREATED:
+      return { ...state, loading: false, posts: [payload, ...state.posts] };
+
     case POST_DELETED:
       return {
         ...state,
