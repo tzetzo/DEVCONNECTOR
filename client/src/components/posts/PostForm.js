@@ -1,36 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { createPost } from "../../actions";
+import PostAndCommentForm from "../post/PostAndCommentForm";
 
 const PostForm = ({ createPost }) => {
-  const [text, setText] = useState("");
+  const submitHandler = text => createPost({ text });
 
   return (
-    <div className="post-form">
-      <div className="bg-primary p">
-        <h3>Say something...</h3>
-      </div>
-      <form
-        className="form my-1"
-        onSubmit={e => {
-          e.preventDefault();
-          createPost({ text });
-        }}
-      >
-        <textarea
-          name="text"
-          cols="30"
-          rows="5"
-          placeholder="Create a post"
-          required
-          value={text}
-          onChange={e => setText(e.target.value)}
-        />
-        <button className="btn btn-dark my-1" type="submit">
-          Submit
-        </button>
-      </form>
-    </div>
+    <PostAndCommentForm
+      heading={"Say something..."}
+      submitHandler={submitHandler}
+    />
   );
 };
 
