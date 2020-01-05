@@ -17,6 +17,7 @@ export {
 
 export {
   createComment,
+  deleteComment,
   createPost,
   deletePost,
   getPost,
