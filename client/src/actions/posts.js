@@ -3,6 +3,8 @@ import history from "../history";
 import { setAlert } from "./";
 
 import {
+  COMMENT_CREATED,
+  COMMENT_DELETED,
   POST_CREATED,
   POST_DELETED,
   POST_LIKES_UPDATED,
@@ -106,6 +108,59 @@ export const getPost = postId => async (dispatch, getState) => {
       type: POST_LOADED,
       payload: post.data
     });
+  } catch (e) {
+    dispatch({
+      type: POSTS_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Create a Comment
+export const createComment = (postId, formValues) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: POSTS_LOADING });
+
+  try {
+    const postComments = await axios.put(
+      `/api/posts/comment/${postId}`,
+      formValues
+    );
+
+    dispatch({
+      type: COMMENT_CREATED,
+      payload: postComments.data
+    });
+
+    dispatch(setAlert("Comment created", "success"));
+  } catch (e) {
+    dispatch({
+      type: POSTS_ERROR,
+      payload: { msg: e.response.statusText, status: e.response.status }
+    });
+  }
+};
+
+// Delete a Comment
+export const deleteComment = (postId, commentId) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: POSTS_LOADING });
+
+  try {
+    const postComments = await axios.delete(
+      `/api/posts/comment/${postId}/${commentId}`
+    );
+
+    dispatch({
+      type: COMMENT_DELETED,
+      payload: postComments.data //vs commentId
+    });
+
+    dispatch(setAlert("Comment deleted", "success"));
   } catch (e) {
     dispatch({
       type: POSTS_ERROR,

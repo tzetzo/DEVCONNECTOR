@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { getPost } from "../../actions";
 import Spinner from "../layout/Spinner";
 import PostItem from "../posts/PostItem";
+import CommentForm from "./CommentForm";
 
 const Post = ({ getPost, post, loadingPost, match }) => {
   useEffect(
     () => {
       getPost(match.params.id);
     },
-    [getPost]
+    [getPost, match.params.id]
   );
 
   if (loadingPost || post === null) return <Spinner />;
@@ -19,6 +20,7 @@ const Post = ({ getPost, post, loadingPost, match }) => {
     <React.Fragment>
       <Link to={`/posts`}>Back to Posts</Link>
       <PostItem post={post} showActions={false} />
+      <CommentForm postId={post._id} />
     </React.Fragment>
   );
 };

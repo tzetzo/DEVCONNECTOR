@@ -1,4 +1,6 @@
 import {
+  COMMENT_CREATED,
+  COMMENT_DELETED,
   POST_CREATED,
   POST_DELETED,
   POST_LIKES_UPDATED,
@@ -47,6 +49,14 @@ export default (state = INITIAL_STATE, { type, payload }) => {
 
     case POST_LOADED:
       return { ...state, loading: false, post: payload };
+
+    case COMMENT_CREATED:
+    case COMMENT_DELETED:
+      return {
+        ...state,
+        loading: false,
+        post: { ...state.post, comments: payload }
+      };
 
     default:
       return state;
