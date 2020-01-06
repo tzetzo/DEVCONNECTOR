@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
 
 const PostAndCommentForm = ({ heading, submitHandler }) => {
   const [text, setText] = useState("");
